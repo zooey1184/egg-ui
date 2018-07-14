@@ -1,4 +1,4 @@
-## cycle-ui
+## egg-ui
 ---
 #####文档查看src/examples/doc
 ```js
