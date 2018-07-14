@@ -1,8 +1,15 @@
 {
   "name": "cycle-ui",
+  "description": "cycle-ui组件库",
   "version": "0.1.0",
-  "private": true,
+  "author": "张应颖 <1184762165@qq.com>",
+  "license": "MIT",
   "main": "packages/index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/zooey1184/cycle-ui"
+  },
+  "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
