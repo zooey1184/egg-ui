@@ -3,7 +3,7 @@
 ##### <font color='#7370ff'>按需加载</font>
 ```js
 // main.js
-import {VReg} from 'cycleUI'
+import {VReg} from 'EggUI'
 
 VReg(Vue)
 ```

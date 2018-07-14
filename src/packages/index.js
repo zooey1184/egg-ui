@@ -4,8 +4,8 @@
  * Date: 18/07/10
  * desc: 全局导入导出
  * use: main.js
- * import cycleUI from 'cycleUI'
- * Vue.use(cycleUI)
+ * import EggUI from 'EggUI'
+ * Vue.use(EggUI)
  * ps: 引进规则：全英文驼峰式，第一个字母大写，导入导出按英文字母排序  注册按组件、插件、指令排序
  */
 

@@ -2,7 +2,7 @@
 --- 
 ##### <font color='#7370ff'>使用方式</font>
 ```js
-import {ModelPane} from 'cycleUI'
+import {ModelPane} from 'EggUI'
 export default {
   components: {
     ModelPane

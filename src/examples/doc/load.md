@@ -3,7 +3,7 @@
 ##### <font color='#7370ff'>按需加载</font>
 ```js
 // main.js
-import {Load} from 'cycleUI'
+import {Load} from 'EggUI'
 
 Vue.use(Load)
 ```

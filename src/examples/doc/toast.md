@@ -3,7 +3,7 @@
 ##### <font color='#7370ff'>按需加载</font>
 ```js
 // main.js
-import {Toast} from 'cycleUI'
+import {Toast} from 'EggUI'
 
 Vue.use(Toast)
 ```

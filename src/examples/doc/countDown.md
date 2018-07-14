@@ -2,7 +2,7 @@
 --- 
 ##### <font color='#7370ff'>使用方式</font>
 ```js
-import {CountDown} from 'cycleUI'
+import {CountDown} from 'EggUI'
 export default {
   components: {
     CountDown
