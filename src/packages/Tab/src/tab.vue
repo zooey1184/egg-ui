@@ -23,7 +23,7 @@
 </template>
 
 <script>
-import {clientRect} from '@/common/js/index'
+// import {clientRect} from '@/common/js/index'
 
 export default {
   name: 'tab',
@@ -64,14 +64,28 @@ export default {
   },
   computed: {
     barWidth: function() {
-      let w = `${clientRect().w-40}px`
+      let w = `${this.clientRect().w-40}px`
       if(this.tabList.length>4) {
-        w = 80*(this.tabList.length)>clientRect().w-40 ?` ${80*(this.tabList.length)}px` : w
+        w = 80*(this.tabList.length)>this.clientRect().w-40 ?` ${80*(this.tabList.length)}px` : w
       }
       return w
     }
   },
   methods: {
+    clientRect () {
+      let posi = {
+        w: 375,
+        h: 603
+      }
+      if (window.innerWidth === undefined) {
+        posi.w = document.documentElement.clientWidth
+        posi.h = document.documentElement.clientHeight
+      } else {
+        posi.w = window.innerWidth
+        posi.h = window.innerHeight
+      }
+      return posi
+    },
     exchange(index) {
       this.activeIndex = index;
       this.$emit('change', index)

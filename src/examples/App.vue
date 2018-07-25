@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <page-wrap state='success'>
+    <page-wrap :state='pageState'>
       <div class="l-app--wrap">
       <tab :tabList='["hello", "world1", "world2","world3","world4"]'>
         <div slot='tab_0'>
@@ -23,7 +23,7 @@
           <button @click='abk' v-reg:a.check="{check: check}">ss</button>
         </div>
         <div slot='tab_1'>
-          hello
+          <button @click='errorFn'>错误页面</button>
         </div>
         <div slot='tab_2'>
           hello
@@ -53,7 +53,8 @@ export default {
     model: false,
     state: false,
     check: false,
-    inp: 'ssss'
+    inp: 'ssss',
+    pageState: 'loading'
   }),
   methods: {
     toastFn(val) {
@@ -82,6 +83,12 @@ export default {
         }
       })
     },
+    errorFn() {
+      this.pageState = 'error'
+      setTimeout(()=> {
+        this.pageState = 'success'
+      }, 2000)
+    },
     loadFn() {
       this.$load.show()
       setTimeout(()=> {
@@ -103,7 +110,9 @@ export default {
     }
   },
   mounted() {
-    
+    setTimeout(()=> {
+      this.pageState = 'success'
+    }, 1000)
   }
 }
 </script>

@@ -18,7 +18,7 @@
     </div>
     <div class="pageWrap_wrap" v-show="(state=='fail' || state=='error')" :style="{background: '#fff'}" :key="2">
       <slot name='fail'>
-        <!-- <fail-page :tip="tip"></fail-page> -->
+        <fail-page :tip="tip"></fail-page>
       </slot>
     </div>
   </transition-group>
@@ -26,13 +26,13 @@
 </template>
 
 <script>
-import {clientRect} from '@/common/js/index'
+// import {clientRect} from '@/common/js/index'
 
 export default {
   name: 'page-wrap',
   components: {
     LoadingPage: () => import('@/components/loadPage.vue'),
-    // FailPage: () => import('@/components/failPage.vue')
+    FailPage: () => import('@/components/failPage.vue')
   },
   props:{
     showFooter: {
@@ -113,6 +113,20 @@ export default {
   },
   methods: {
     // 防抖
+    clientRect () {
+      let posi = {
+        w: 375,
+        h: 603
+      }
+      if (window.innerWidth === undefined) {
+        posi.w = document.documentElement.clientWidth
+        posi.h = document.documentElement.clientHeight
+      } else {
+        posi.w = window.innerWidth
+        posi.h = window.innerHeight
+      }
+      return posi
+    },
     debounceFn(fn, wait) {
       let t = null
       return function() {
@@ -175,8 +189,8 @@ export default {
     let obj = {
       top: 0,
       left: 0,
-      width: clientRect().w,
-      height: clientRect().h
+      width: this.clientRect().w,
+      height: this.clientRect().h
     }
     window.localStorage.setItem('pageRect', JSON.stringify(obj))
   },
