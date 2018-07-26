@@ -4,8 +4,9 @@
   </span>
 </template>
 <script>
-import { requestAnimationFrame, cancelAnimationFrame } from '@/common/js/requestAnimationFrame.js'
+import { requestAnimationFrame, cancelAnimationFrame } from '../../../common/js/requestAnimationFrame.js'
 export default {
+  name: 'Wave-number',
   props: {
     startVal: {//起始数字
       type: Number,

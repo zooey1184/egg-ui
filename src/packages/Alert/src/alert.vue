@@ -93,9 +93,9 @@ export default {
 </script>
 
 <style scoped lang='less'>
-// @import '~@/common/css/base.less';
-// @import '~@/common/css/var.less';
-// @import '~@/common/css/transition.less';
+@import '../../../common/css/base.less';
+@import '../../../common/css/var.less';
+@import '../../../common/css/transition.less';
 * {
   margin: 0;
   padding: 0;
@@ -118,59 +118,6 @@ export default {
   height: 0;
   opacity: 0;
   z-index: -1;
-}
-/*淡入淡出*/
-.fade-enter-active, .fade-leave-active {
-  transition: all .3s ease;
-}
-.fade-enter, .fade-leave-to {
-  opacity: 0;
-}
-/*bounce*/
-.bounce-enter-active, .bounce-leave-active {
-  transition: all 0.4s ease;
-}
-.bounce-enter, .bounce-leave-to {
-  transform: scale(1.5);
-  opacity: 0;
-}
-/*slide-toggle*/
-.slideB-enter-active, .slideB-leave-active {
-  transition: all 0.4s ease;
-}
-.slideB-enter, .slideB-leave-to {
-  transform: translateY(100%);
-  opacity: 0;
-}
-.slideT-enter-active, .slideT-leave-active {
-  transition: all 0.4s ease;
-}
-.slideT-enter, .slideT-leave-to {
-  transform: translateY(-100%);
-  opacity: 0;
-}
-.slideR-enter-active, .slideR-leave-active {
-  transition: all 0.4s ease;
-}
-.slideR-enter, .slideR-leave-to {
-  transform: translateX(-120px);
-  opacity: 0;
-}
-/*scale-toggle*/
-.scale-enter-active, .scale-leave-active {
-  transition: all 0.4s ease;
-}
-.scale-enter, .scale-leave-to {
-  transform: scale(0);
-  opacity: 0;
-}
-/*rotate-toggle*/
-.rotate-enter-active, .rotate-leave-active {
-  transition: all 0.4s ease;
-}
-.rotate-enter, .rotate-leave-to {
-  transform: rotate(180deg) scale(0.5);
-  opacity: 0;
 }
 
 .alert--full {

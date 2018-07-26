@@ -31,8 +31,8 @@
 export default {
   name: 'page-wrap',
   components: {
-    LoadingPage: () => import('@/components/loadPage.vue'),
-    FailPage: () => import('@/components/failPage.vue')
+    LoadingPage: () => import('../../../components/loadPage.vue'),
+    FailPage: () => import('../../../components/failPage.vue')
   },
   props:{
     showFooter: {

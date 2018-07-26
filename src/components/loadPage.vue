@@ -33,24 +33,48 @@ export default {
   position: absolute;
   left: 50%;
   top: 50%;
-  transform: translate(-50%, -50%);
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
 }
 .circular {
   height: 42px;
   width: 42px;
-  animation: loading-rotate 2s linear infinite;
+  -webkit-animation: loading-rotate 2s linear infinite;
+          animation: loading-rotate 2s linear infinite;
 }
 .path {
-  animation: loading-dash 1.5s ease-in-out infinite;
+  -webkit-animation: loading-dash 1.5s ease-in-out infinite;
+          animation: loading-dash 1.5s ease-in-out infinite;
   stroke-dasharray: 90,150;
   stroke-dashoffset: 0;
   stroke-width: 2;
   stroke: #409eff;
   stroke-linecap: round;
 }
+@-webkit-keyframes loading-rotate {
+  100% {
+    -webkit-transform: rotate(1turn);
+            transform: rotate(1turn);
+  }
+}
 @keyframes loading-rotate {
   100% {
-    transform: rotate(1turn);
+    -webkit-transform: rotate(1turn);
+            transform: rotate(1turn);
+  }
+}
+@-webkit-keyframes loading-dash {
+  0% {
+    stroke-dasharray: 1,200;
+    stroke-dashoffset: 0;
+  }
+  50% {
+    stroke-dasharray: 90,150;
+    stroke-dashoffset: -40px;
+  }
+  100% {
+    stroke-dasharray: 90,150;
+    stroke-dashoffset: -120px;
   }
 }
 @keyframes loading-dash {

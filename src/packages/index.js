@@ -26,14 +26,14 @@ import PageWrap from './PageWrap/index.js'
 import Tab from './Tab/index'
 import Toast from './Toast/index.js'
 import VReg from './VReg/index.js'
-// import WaveNumber from './WaveNumber/index'
+import WaveNumber from './WaveNumber/index'
 
 const components = [
   CountDown,
   ModelPane,
   PageWrap,
-  Tab
-  // WaveNumber
+  Tab,
+  WaveNumber
 ]
 
 /**
@@ -66,6 +66,6 @@ export default {
   PageWrap,
   Tab,
   Toast,
-  VReg
-  // WaveNumber
+  VReg,
+  WaveNumber
 }
