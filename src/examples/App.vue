@@ -2,7 +2,7 @@
   <div id="app">
     <page-wrap :state='pageState'>
       <div class="l-app--wrap">
-      <tab :tabList='["hello", "world1", "world2","world3","world4"]'>
+      <tab :tabList='["hello", "world1", "world2","world3","world4"]' v-if='pageState=="success"'>
         <div slot='tab_0'>
           <button class="btn" @click='toastFn(1)'>顶部toast</button>
           <button class="btn" @click='toastFn(2)'>中间toast</button>
@@ -26,7 +26,8 @@
           <button @click='errorFn'>错误页面</button>
         </div>
         <div slot='tab_2'>
-          hello
+          <button @click='play'>sss</button>
+          <wave-number ref='number' :startVal='100' :endVal='356'></wave-number>
         </div>
         <div slot='tab_3'>
           hello
@@ -54,7 +55,8 @@ export default {
     state: false,
     check: false,
     inp: 'ssss',
-    pageState: 'loading'
+    pageState: 'loading',
+    autoplay: false
   }),
   methods: {
     toastFn(val) {
@@ -107,6 +109,9 @@ export default {
     },
     change() {
 
+    },
+    play() {
+      this.$refs.number.start()
     }
   },
   mounted() {

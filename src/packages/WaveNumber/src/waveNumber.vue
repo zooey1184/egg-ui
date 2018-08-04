@@ -6,7 +6,7 @@
 <script>
 import { requestAnimationFrame, cancelAnimationFrame } from '../../../common/js/requestAnimationFrame.js'
 export default {
-  name: 'Wave-number',
+  name: 'wave-number',
   props: {
     startVal: {//起始数字
       type: Number,

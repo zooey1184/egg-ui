@@ -1,5 +1,5 @@
 <template lang="html">
-  <div class="c--tab">
+  <div class="c--tab" ref='tab'>
     <!-- tab_bar区域 -->
     <div class="tab--bar" :style='{height: `${barH}px`}'>
       <!-- 返回按钮 -->
@@ -31,6 +31,7 @@ export default {
     tabLength: 2,
     activeIndex: 0,
     tabW: 1,
+    barWidth: ''
   }),
   props: {
     tabList: {
@@ -63,13 +64,16 @@ export default {
     }
   },
   computed: {
-    barWidth: function() {
-      let w = `${this.clientRect().w-40}px`
-      if(this.tabList.length>4) {
-        w = 80*(this.tabList.length)>this.clientRect().w-40 ?` ${80*(this.tabList.length)}px` : w
-      }
-      return w
-    }
+    // barWidth: function() {
+    //   let w = `${this.clientRect().w-40}px`
+    //   let r = this.$refs.tab.getBoundingClientRect()
+    //     console.log(r);
+      
+    //   if(this.tabList.length>4) {
+    //     w = 80*(this.tabList.length)>this.clientRect().w-40 ?` ${80*(this.tabList.length)}px` : w
+    //   }
+    //   return w
+    // }
   },
   methods: {
     clientRect () {
@@ -98,6 +102,18 @@ export default {
     this.tabLength = this.tabList.length;
     this.tabW = 100 / this.tabLength;
     this.activeIndex = this.active;
+  },
+  mounted() {
+    let r = this.$refs.tab.getBoundingClientRect()
+    // let w = `${this.clientRect().w-40}px`
+    let w = `${r.width-40}px`
+    
+    
+    if(this.tabList.length>4) {
+      // w = 80*(this.tabList.length)>this.clientRect().w-40 ?` ${80*(this.tabList.length)}px` : w
+      w = 80*(this.tabList.length)>r.width-40 ?` ${80*(this.tabList.length)}px` : w
+    }
+    this.barWidth = w
   }
 }
 </script>
@@ -107,6 +123,27 @@ export default {
   position: relative;
   width: 100%;
   height: 100%;
+  ::-webkit-scrollbar {
+    width: 0px;
+    height: 1px;
+  }
+  ::-webkit-scrollbar-thumb{
+    background-color: #999;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+  }
+  ::-webkit-scrollbar-thumb:vertical:hover{
+    background-color: #666;
+  }
+  ::-webkit-scrollbar-thumb:vertical:active{
+    background-color: #333;
+  }
+  ::-webkit-scrollbar-button{
+    display: none;
+  }
+  ::-webkit-scrollbar-track{
+    background-color: #f1f1f1;
+  }
 }
 .tab--bar {
   position: absolute;

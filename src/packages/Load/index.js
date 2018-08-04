@@ -22,6 +22,10 @@ LoadPlugin.install = function (Vue, options) {
     show: function (options = '') {
       if (typeof (options) === 'string') {
         loadVm.title = options
+        loadVm.bg = 'rgba(0,0,0,0.3)'
+        loadVm.color = '#fff'
+        loadVm.stroke = '#fff'
+        loadVm.bgWrap = 'rgba(0,0,0,0)'
         loadVm.showLoading = true
       } else if (typeof (options) === 'object') {
         Object.assign(loadVm, options)
