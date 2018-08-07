@@ -4,7 +4,7 @@
   </span>
 </template>
 <script>
-import { requestAnimationFrame, cancelAnimationFrame } from '../../../common/js/requestAnimationFrame.js'
+import { requestAnimationFrame, cancelAnimationFrame } from './requestAnimationFrame.js'
 export default {
   name: 'wave-number',
   props: {
