@@ -19,11 +19,11 @@ export default (Vue) => {
             let obj = window[arg]
             for (let v of obj.values()) {
               if (v.va === false || v.va === 'false') {
-                if (window.vm.$toast.show) {
-                  window.vm.$toast.show(v.msg || '请检查提交信息')
+                if (window.vtoast.$toast.show) {
+                  window.vtoast.$toast.show(v.msg || '请检查提交信息')
                 } else {
                   try {
-                    window.vm.$toast(v.msg || '请检查提交信息')
+                    window.vm.$toast(v.msg || '请检查提交信息!')
                   } catch (error) {
                     console.log(error)
                     console.log(v.msg)

@@ -1,7 +1,7 @@
 /* eslint-disable */
 module.exports = {
   // 基本路径
-  baseUrl: '/',
+  publicPath: '/pages/eggui/',
   pages: {
     index: {
       // entry for the page

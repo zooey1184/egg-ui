@@ -18,22 +18,89 @@ Load加载器插件
 Toast提示插件
 VReg正则校验指令
 */
-import Alert from './Alert/index.js'
-import CountDown from './CountDown/index.js'
-import ModelPane from './ModelPane/index.js'
-import Load from './Load/index.js'
-import PageWrap from './PageWrap/index.js'
+import ActionSheet from './ActionSheet'
+import Ajax from './Ajax'
+import cell from './Cell'
+import CountDown from './CountDown'
+import formPost from './FormPost'
+import ModelPane from './ModelPane'
+import Load from './Load'
+import Mask from './Mask'
+import Page from './PageWrap'
+import nav from './navRouter'
 import Tab from './Tab/index'
-import Toast from './Toast/index.js'
+import Toast from './Toast'
 import VReg from './VReg/index.js'
 import WaveNumber from './WaveNumber/index'
+import plugin from './mixins/plugin'
 
 const components = [
   CountDown,
   ModelPane,
-  PageWrap,
+  Page,
   Tab,
-  WaveNumber
+  WaveNumber,
+  cell.cell,
+  cell.cellWrap
+]
+
+const sheet = plugin(ActionSheet, {
+  name: 'sheet',
+  showName: 'showToast',
+  fullClassName: 'actionSheet--full',
+  initOptions: {
+    animate: 'slideC'
+  }
+})
+const mask = plugin(Mask, {
+  initOptions: {
+    styleContent: {
+      top: '35%'
+    }
+  },
+  name: 'mask',
+  showName: 'showToast',
+  fullClassName: 'mark--full'
+})
+const form = plugin(formPost, {
+  initOptions: {
+    action: '',
+    params: []
+  },
+  name: 'form',
+  showName: 'showForm',
+  fullClassName: 'formPost--full'
+})
+const load = plugin(Load, {
+  initOptions: {},
+  name: 'load',
+  showName: 'showLoading',
+  fullClassName: 'load',
+  typeString: 'title'
+})
+const toast = plugin(Toast, {
+  initOptions: {
+    position: 'top',
+    type: 'none',
+    bg: '#323E4F',
+    color: '#d43f33',
+    isOrigin: false,
+    styleContent: {}
+  },
+  name: 'toast',
+  showName: 'showToast',
+  fullClassName: 'toast_pane',
+  typeString: 'msg'
+})
+
+const plugins = [
+  load,
+  Ajax,
+  form,
+  sheet,
+  toast,
+  nav,
+  mask
 ]
 
 /**
@@ -45,10 +112,10 @@ const install = function (Vue) {
   if (install.installed) return
   // 组件
   components.map(component => Vue.component(component.name, component))
+
   // 插件
-  Vue.use(Alert)
-  Vue.use(Load)
-  Vue.use(Toast)
+  plugins.map(item=> Vue.use(item))
+
   // 指令
   VReg(Vue)
 }
@@ -59,13 +126,20 @@ if (typeof window !== 'undefined' && window.Vue) {
 
 export default {
   install,
-  Alert,
   CountDown,
   ModelPane,
-  Load,
-  PageWrap,
+  Page,
   Tab,
-  Toast,
+  WaveNumber,
+  cell: cell.cell,
+  cellWrap: cell.cellWrap,
+  Load,
+  Ajax,
+  form,
+  sheet,
+  toast,
+  nav,
+  mask,
   VReg,
   WaveNumber
 }

@@ -8,7 +8,7 @@
         bottomStyle: (position=='bottom'),
         headerTop: (position=='top' && isOrigin)
       }"
-      :style="{color: color, background: bg}">
+      :style="styleC">
       <img v-if="type=='success'" class="icon_style" src="../img/success.png" alt="">
       <img v-if="type=='error'" class="icon_style" src="../img/error.png" alt="">
       <img v-if="type=='loading'" class="icon_style" src="../img/loading_img.gif" alt="">
@@ -30,10 +30,18 @@ export default {
     bg: 'rgba(0, 0, 0, 0.6)',
     type: "",
     toJSON: '',
-    isOrigin: false
+    isOrigin: false,
+    duration: 2500,
+    styleContent: {}
   }),
-  props: {
-
+  watch: {
+    showToast: function(n, o) {
+      if(n) {
+        setTimeout(()=> {
+          this.showToast = false
+        }, this.duration)
+      }
+    }
   },
   computed: {
     transitionFn: function() {
@@ -50,15 +58,23 @@ export default {
         ani = 'slideMiddle'
       }
       return ani
+    },
+    styleC: function() {
+      let s = {
+        color: this.color,
+        background: this.bg
+      }
+      let t = Object.assign(s, this.styleContent)
+      return t
     }
-  },
+  }
 }
 </script>
 
 <style scoped>
 /*@import url("../animation/common.css");*/
 .common_font {
-  font-size: 14px;
+  font-size: 15px;
   font-weight: 400;
   z-index: 9999999;
   font-family: "微软雅黑";
@@ -78,19 +94,20 @@ export default {
   margin-right:10px;
 }
 .topStyle {
-  position: absolute;
-	top: 0;
-	left: 0;
-	width: 100%;
+  position: fixed;
+  top: 8px;
+  border-radius: 10px;
+	left: 3%;
+	width: 94%;
 	padding: 12px 0;
-	background: rgba(250, 100, 100, .9);
-	color: #fff;
-	font-size: 14px;
+	background: rgba(255,255,255,.6);
+	color: rgba(250, 100, 100, .9);
+	font-size: 16px;
 	text-align: center;
 	z-index: 1000000;
 }
 .middleStyle {
-  position: absolute;
+  position: fixed;
   min-width: 30%;
   max-width: 70%;
   transform: translate(-50%, -50%);
@@ -102,12 +119,13 @@ export default {
   display: flex;
 }
 .bottomStyle {
-  position: absolute;
+  position: fixed;
   width: 100%;
   bottom: 0;
   left: 0;
   min-height: 30px;
-  padding: 10px;
+  font-size: 16px;
+  padding: 14px;
   box-sizing: border-box
 }
 .typeStyle {

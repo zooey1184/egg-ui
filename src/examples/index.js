@@ -1,7 +1,9 @@
 import Vue from 'vue'
 import App from './App.vue'
-import cUI from '../packages/index.js'
-Vue.use(cUI)
+import eggUi from '../packages/index.js'
+import pageTwo from './views/pageTwo.vue'
+Vue.component('pageTwo', pageTwo)
+Vue.use(eggUi)
 
 Vue.config.productionTip = false
 

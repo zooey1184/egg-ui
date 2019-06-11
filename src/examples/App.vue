@@ -1,52 +1,38 @@
 <template>
   <div id="app">
-    <page-wrap :state='pageState'>
+    <page :state='pageState'>
       <div class="l-app--wrap">
-      <tab :tabList='["hello", "world1", "world2","world3","world4"]' v-if='pageState=="success"'>
-        <div slot='tab_0'>
-          <button class="btn" @click='toastFn(1)'>顶部toast</button>
-          <button class="btn" @click='toastFn(2)'>中间toast</button>
-          <button class="btn" @click='toastFn(3)'>底部toast</button>
-          <div>
-            <button class="btn" @click='alertFn'>alert</button>
-          </div>
-          <div>
-            <button class="btn" @click='loadFn'>load</button>
-          </div>
-          <count-down :state='state' @change='change'></count-down>
-          <input type="text" v-model='inp' v-reg:a="{rule: '1', test: inp, msg: '有错', tag: 'inp'}">
-          <model-pane v-model='model'>
-            <div @click='model=false'>
-              hello
-            </div>
-          </model-pane>
-          <button @click='abk' v-reg:a.check="{check: check}">ss</button>
+      <tab :tabList='["插件", "指令", "组件", "tab_4", "tab_5"]' v-if='pageState=="success"'>
+        <div slot='tab_0' style="height: 95%">
+          <plugin></plugin>
         </div>
+
         <div slot='tab_1'>
-          <button @click='errorFn'>错误页面</button>
+          <tpl></tpl>
         </div>
         <div slot='tab_2'>
-          <button @click='play'>sss</button>
+          <button class='btn' @click='play'>开始动画</button>
           <wave-number ref='number' :startVal='100' :endVal='356'></wave-number>
         </div>
         <div slot='tab_3'>
-          hello
+          <button class="btn" @click='errorFn'>显式错误页面</button>
+          <button class="btn" @click='loadFn'>显式加载页面</button>
         </div>
         <div slot='tab_4'>
-          hello
+          <div>
+            <button class="btn" @click='goNext'>gonext</button>
+          </div>
         </div>
-        <div slot='tab_5'>
-          hello
-        </div>
-
       </tab>
     </div>
-    </page-wrap>
+    </page>
   </div>
 </template>
 
 <script>
 import {check} from '../packages/VReg/src/rule'
+import plugin from './views/plugin.vue'
+import tpl from './views/tpl.vue'
 
 export default {
   name: 'app',
@@ -58,33 +44,11 @@ export default {
     pageState: 'loading',
     autoplay: false
   }),
+  components: {
+    plugin,
+    tpl
+  },
   methods: {
-    toastFn(val) {
-      if(val==1) {
-        this.$toast.show('toast')
-      }else if(val==2) {
-        this.$toast.show({
-          msg: 'toast2',
-          position: 'middle',
-          type: 'error'
-        })
-      }else if(val==3) {
-        this.$toast.show({
-          msg: 'toast3',
-          position: 'bottom',
-          type: 'loading'
-        })
-      }
-    },
-    alertFn() {
-      const self = this
-      this.$alert.show({
-        btn: ['confirm'],
-        confirmFn: ()=> {
-          self.$alert.hide()
-        }
-      })
-    },
     errorFn() {
       this.pageState = 'error'
       setTimeout(()=> {
@@ -92,37 +56,38 @@ export default {
       }, 2000)
     },
     loadFn() {
-      this.$load.show()
+      this.pageState = 'loading'
       setTimeout(()=> {
-        this.$load.hide()
+        this.pageState = 'success'
       }, 2000)
-    },
-    abk() {
-      this.check = true 
-      if(check('a')) {
-        console.log('dasda')
-      }else {
-        setTimeout(()=> {
-          this.check = false
-        }, 50)
-      }
-    },
-    change() {
-
     },
     play() {
       this.$refs.number.start()
+    },
+    goNext() {
+      this.$nav.push("pageTwo")
     }
   },
   mounted() {
     setTimeout(()=> {
       this.pageState = 'success'
-    }, 1000)
+    }, 50)
   }
 }
 </script>
 
 <style lang="less">
+#app {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0
+}
+* {
+  margin: 0;
+  padding: 0
+}
 .l-app--wrap {
   position: absolute;
   width: 100%;
@@ -139,7 +104,8 @@ export default {
   background: #22d2c3;
   outline: none;
   border: none;
-  margin: 15px;
+  margin: 10px 0;
+  margin-right: 10px;
 }
 </style>
 
