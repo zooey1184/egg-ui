@@ -1,4 +1,12 @@
-export function formate (params, type = 'POST') {
+/**
+ *
+ * 格式化参数，自动排序提交form表单
+ * @export
+ * @param {*} params 传参对象 get会拼接 post会处理对象
+ * @param {string} [type='POST']
+ * @returns
+ */
+export function formate(params, type = 'POST') {
   let d = null
   if (type === 'POST') {
     let form = new FormData()
@@ -30,7 +38,7 @@ export function formate (params, type = 'POST') {
   return d
 }
 
-export function loadFn () {
+export function loadFn() {
   let load = null
   let show = () => {
     console.log('loading')
@@ -48,7 +56,7 @@ export function loadFn () {
   return load
 }
 
-export function toastFn (msg) {
+export function toastFn(msg) {
   let toast = (msg) => {
     console.log(msg)
   }
@@ -56,13 +64,38 @@ export function toastFn (msg) {
   return toast(msg)
 }
 
-export function setHeader (request, h) {
+/**
+ * @export
+ * @param {*} request
+ * @param {*} h header object设置头的对象
+ */
+export function setHeader(request, h) {
   for (let i in h) {
     request.setRequestHeader(i, h[i])
   }
 }
 
-export function errorMsg (status) {
+export function setHook(request, hooks) {
+  return {
+    beforeSend: () => {
+      const state = 'beforeSend'
+      // 添加属性
+      let props = hooks[state].props || null
+      if (props && props instanceof Array) { // 属性 键值对 数组
+        props.forEach(item => {
+          request[item.key] = item.value
+        });
+      }
+      // 执行方法
+      let method = hooks[state].method || null
+      if (method && typeof method === 'function') {
+        method(...arguments)
+      }
+    }
+  }
+}
+
+export function errorMsg(status) {
   let obj = {
     403: '资源禁止访问，你可能未登录',
     404: '接口/资源不正确，请确认',
@@ -81,7 +114,7 @@ export function errorMsg (status) {
   return msg
 }
 
-export function ajaxLog (request, url) {
+export function ajaxLog(request, url) {
   if (window._Log) {
     try {
       window._Log.Crash(request.responseText, {

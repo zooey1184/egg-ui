@@ -1,14 +1,14 @@
 <template>
-  <div class="c-cellItem" :class='{underlineF: showLine=="part", underlineFull: showLine=="full"}' ref='cell' :style='wrapContent'>
-    <div :class="{line_slide: lineAnimate}">
-      <div class="cell_left" :style='letfContent'>
+  <div class="c-cellItem" :class='underLineC' ref='cell' :style='wrapContent' v-if='showCell'>
+    <div :class="itemWrapClass" class="f_flex">
+      <div class="left" ref='left' :style='letfContent'>
         <p v-if='title'>{{title}}</p>
         <slot v-else name='left'></slot>
       </div>
-      <div class="cell_middle" v-if='showContent'>
+      <div class="middle f_g1" :style="{width: `${mid}px`}">
         <slot></slot>
       </div>
-      <div class="cell_right" :style='rightContent'>
+      <div class="right" v-if='showRight' ref='right' :style='rightContent'>
         <slot name='right'>
           <img class="arrow" src="../assets/arrow.png" alt="">
         </slot>
@@ -23,19 +23,37 @@ import mixins from '@/common/mixins/list_tpl.js'
 export default {
   name: 'cell',
   mixins: [mixins],
+  data: ()=> ({
+    mid: 180
+  }),
   computed: {
     wrapContent: function() {
       let attr = this.getAttr()
+      let wrapStyle = attr.wrapStyle || {}
       let h = this.height || attr.height
       let obj = {}
       if(h>0) {
         obj.height = `${h}px`
       }
+      Object.assign(obj, wrapStyle)
+      return obj
+    },
+    underLineC: function() {
+      let attr = this.getAttr()
+      let underline = this.underLine || attr.underline || "underlineF"
+      let obj = {
+        [underline]: this.showUnderline
+      }
       return obj
     },
     lineAnimate: function() {
       let attr = this.getAttr()
-      let a = this.lineAni || attr.lineAni
+      let a = false
+      if(this.lineAni) {
+        a = true
+      }else if(attr.lineAni) {
+        a = true
+      }
       return a
     },
     letfContent: function() {
@@ -57,20 +75,34 @@ export default {
       let obj = this.rightStyle
       return obj
     },
-    showLine: function() {
-      let attr = this.getAttr()
-      let a = this.fullLine || attr.fullLine
-      let b = this.underLine || attr.underLine
-      if(a) {
-        return 'full'
-      }
-      if(b) {
-        return 'part'
+    itemWrapClass: function() {
+      if(this.itemClass instanceof Array) {
+        if(this.lineAnimate) {
+          this.itemClass.unshift("line_slide")
+          return this.itemClass
+        }else {
+          return this.itemClass
+        }
+      } else {
+        if(this.lineAnimate) {
+          this.itemClass.line_slide = true
+          return this.itemClass
+        } else {
+          return this.itemClass
+        }
       }
     }
   },
   props: {
     width: {
+      type: Number,
+      default: 0,
+    },
+    showCell: {
+      type: Boolean,
+      default: true
+    },
+    offset: {
       type: Number,
       default: 0,
     },
@@ -82,10 +114,11 @@ export default {
       type: Number,
       default: 0,
     },
-    underLine: {
+    showUnderline: {
       type: Boolean,
       default: true,
     },
+    underLine: String,
     leftStyle: {
       type: Object,
       default: ()=> ({})
@@ -95,19 +128,43 @@ export default {
       default: ()=> ({})
     },
     lineAni: {
-      type: Boolean
-    },
-    fullLine: Boolean,
-    showContent: {
       type: Boolean,
-      default: true
+      default: false,
+    },
+    showRight: {
+      type: Boolean,
+      default: true,
+    },
+    itemClass: {
+      type: [Array, Object],
+      default: ()=> ({})
     }
-  }
+  },
+  methods: {
+    getW(r) {
+      let w = this.$refs[r]
+      return w.getBoundingClientRect()
+    }
+  },
+  mounted() {
+    let l = this.getW('left').width
+    
+    let r = 0
+    if(this.showRight) {
+      r = this.getW('right').width
+    }
+    let w = this.getW('cell').width
+    let attr = this.getAttr()
+    let offset = this.offset || attr.offset || 0
+    let mid = w - r - l - 12 - offset
+    this.mid = mid
+  },
 }
 </script>
 
 <style lang="less">
 @import url('../assets/index.less');
+@import url('../../../common/css/flex.less');
 .o-vertical-center {
   position: relative;
   .v-center;
@@ -125,15 +182,14 @@ export default {
   .line_slide {
     .underline_slide
   }
-  .cell_left, .cell_middle, .cell_right {
+  .left, .middle, .right {
     display: inline-block;
     vertical-align: middle;
     height: 100%;
   }
-  .cell_middle {
+  .middle {
     position: relative;
     height: inherit;
-    min-width: 180px;
     box-sizing: border-box;
     margin-left: 5px;
     input {
@@ -142,13 +198,14 @@ export default {
       border: none;
       outline: none;
       font-size: 15px;
-      background: transparent
+      background: transparent;
     }
   }
-  .cell_right {
+  .right {
     position: absolute;
     right: 0;
     height: 100%;
+    width: 10px;
     .arrow {
       width: 8px;
       position: absolute;
@@ -157,4 +214,5 @@ export default {
     }
   }
 }
+
 </style>

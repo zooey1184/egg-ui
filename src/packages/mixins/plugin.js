@@ -6,11 +6,11 @@
  */
 const plugin = (tpl, initOptions) => {
   class Plugin {
-    constructor (tpl, initOptions) {
+    constructor(tpl, initOptions) {
       this.tpl = tpl
       this.initOpt = initOptions
     }
-    install (Vue, options) {
+    install(Vue, options) {
       let pName = this.initOpt.name
       let fullClassName = this.initOpt.fullClassName
       let initOptions = this.initOpt.initOptions ? this.initOpt.initOptions : {} // 默认项防止被覆盖
@@ -41,15 +41,22 @@ const plugin = (tpl, initOptions) => {
               $vplugin.animate = 'fade'
             }
             $vplugin[showName] = true
+            // 回调函数 参数为实例
+            if (typeof callback === 'function') {
+              callback($vplugin)
+            }
           } catch (e) {
             console.log(e || `${pName}出错了`)
           }
+        },
+        hide: (callback) => {
+          $vplugin[showName] = false
           if (typeof callback === 'function') {
             callback($vplugin)
           }
         },
-        hide: () => {
-          $vplugin[showName] = false
+        target: () => {
+          return $vplugin
         }
       }
     }

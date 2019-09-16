@@ -1,23 +1,13 @@
 /**
  * @author: zooey
  * changer: zooey
- * Date: 18/07/10
+ * Date: 19/09/16
  * desc: 全局导入导出
  * use: main.js
  * import EggUI from 'EggUI'
  * Vue.use(EggUI)
- * ps: 引进规则：全英文驼峰式，第一个字母大写，导入导出按英文字母排序  注册按组件、插件、指令排序
  */
 
-/**
-*说明：
-Alert全局弹窗插件
-CountDown倒计时组件
-ModelPane蒙层组件
-Load加载器插件
-Toast提示插件
-VReg正则校验指令
-*/
 import ActionSheet from './ActionSheet'
 import Ajax from './Ajax'
 import cell from './Cell'
@@ -114,7 +104,7 @@ const install = function (Vue) {
   components.map(component => Vue.component(component.name, component))
 
   // 插件
-  plugins.map(item=> Vue.use(item))
+  plugins.map(item => Vue.use(item))
 
   // 指令
   VReg(Vue)
@@ -141,5 +131,5 @@ export default {
   nav,
   mask,
   VReg,
-  WaveNumber
+  plugin
 }

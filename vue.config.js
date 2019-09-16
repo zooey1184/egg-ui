@@ -30,7 +30,7 @@ module.exports = {
     if (process.env.NODE_ENV === 'production') {
       // 生产开发配置
       // public: 'https://r.51gjj.com/business/assets/main/loan/hualishu/',
-      console.log(config.output.publicPath)
+      // console.log(config.output.publicPath)
     }
   },
   // 输出文件目录

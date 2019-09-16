@@ -4,9 +4,9 @@
       <div class="mark--full" v-if='showToast' :style='{background: bg}'></div>
     </transition>
     <transition :name="animate">
-      <div class='alert__content' @click.stop='closeFnM($event, "alert__content")' v-show='showToast' :style='{transitionDelay: "20ms"}'>
+      <div class='alert__content' @click.stop='closeMaskFn($event, "alert__content")' v-if='showToast' :style='{transitionDelay: "20ms"}'>
         <div class='content' :style='styleContent'>
-          <component v-if='tpl' :is='tpl' :callback='callback'></component>
+          <component v-if='tpl' :is='tpl' :tplProps='tplProps'></component>
           <div v-else class="mark_content_main">
             <h4 class="content__title" v-if='title'>{{title}}</h4>
             <img class="icon_close" v-if='showClose' @click='closeFn' src="./close.png" alt="">
@@ -16,9 +16,9 @@
           <div class='btn__group' v-if='btn.length>0'>
             <p 
               v-for='(item, index) in btn' 
-              :style='{color: item.color ? item.color : "#2b70f5"}' 
+              :style='{color: item.color ? item.color : "#2b70f5", background: item.bg ? item.bg : "rgba(0,0,0,0)"}' 
               :class='{ lastBtn: showBtnLine(index)}' 
-              @click='actionFn(item.type)' 
+              @click='actionFn(item)' 
               :key='item.type'>
               {{item.text}}
             </p>
@@ -43,12 +43,13 @@ export default {
     btn: [],
     toJSON: '',
     styleContent: {top: '35%'},
-    callback: null
+    tplProps: null
   }),
   methods: {
     actionFn(item) {
-      if(item && item=='cancle') {
-        this.cancleFn(item)
+      if(item && item.type) {
+        // this.cancleFn(item)
+        this[`${item.type}Fn`](item)
       }else {
         this.confirmFn(item)
       }
@@ -65,14 +66,13 @@ export default {
       }
       return b
     },
-    closeFnM(e, c) {
+    closeMaskFn(e, c) {
       if(e.target.classList.contains(c)) {
         this.closeFn()
       }
     },
     cancleFn() {
-      console.log('this is from cancle vue');
-      this.$emit('cancle')
+      this.closeFn()
     },
     confirmFn() {
       console.log('this is from confirmFn');
@@ -136,7 +136,7 @@ export default {
     overflow: hidden;
     display: block;
     margin: 0 auto;
-    background: rgb(255, 251, 251);
+    background: #fffbfb;
     position: relative;
     border-radius: 10px;
     text-align: center;
